@@ -16,3 +16,7 @@ Copy syntax/gcov-marker.vim to ~/.vim/syntax
 
 In the window of your source file, run command
 :GcovLoad source.gcov
+or
+:GcovLoad source.gcda
+
+The second one will run gcov silently before loading the coverage file

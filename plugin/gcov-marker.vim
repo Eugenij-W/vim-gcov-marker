@@ -15,6 +15,12 @@ function! SetCov(...)
    else
       return
    endif
+   "Check suffix of file name. Run gcov if necessary
+   if filename =~ '.gcda'
+       silent exe ":!gcov " . filename | redraw!
+       let filename = substitute(filename, "\.gcda", "\.c\.gcov", "")
+   endif
+
    "Clear previous markers
    exe ":sign unplace *"
    call setloclist(0, [])
