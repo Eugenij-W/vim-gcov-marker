@@ -15,11 +15,6 @@ function! SetCov(...)
    else
       return
    endif
-   "Check suffix of file name. Run gcov if necessary
-   if filename =~ '.gcda'
-       silent exe ":!gcov " . filename | redraw!
-       let filename = substitute(filename, "\.gcda", "\.c\.gcov", "")
-   endif
 
    "Clear previous markers
    exe ":sign unplace *"
@@ -46,6 +41,34 @@ function! SetCov(...)
    exe ":lopen"
 endfunction
 
+" Generate and load gcov
+function! LoadDir(...)
+   if(a:0 == 2)
+         let dirname = a:2
+   elseif (a:0 == 1)
+      if(a:1 == '!')
+         exe ":sign unplace *"
+         return
+      endif
+      if(exists("b:coveragedir") && b:coveragedir != '')
+         let dirname = b:coveragedir
+      else
+         echoerr "no dir for buffer specified yet"
+         return
+      endif
+   else
+      return
+   endif
+
+   let b:coveragedir = dirname
+   let filename = expand('%:t')
+   " Generate gcov
+   silent exe ":!pushd " . dirname . "; gcov " . filename . ";popd" | redraw!
+
+   "Load the new gcov file
+   call SetCov('<bang>', dirname . '/' . filename . ".gcov")
+endfunction
 
 command! -bang -nargs=* -complete=file GcovLoad call SetCov('<bang>',<f-args>)
+command! -bang -nargs=* -complete=dir GcovLoadDir call LoadDir('<bang>',<f-args>)
 

@@ -14,9 +14,38 @@ Copy syntax/gcov-marker.vim to ~/.vim/syntax
 
 ## Usage
 
-In the window of your source file, run command
-:GcovLoad source.gcov
-or
-:GcovLoad source.gcda
+1. In the window of your source file, run command
 
-The second one will run gcov silently before loading the coverage file
+~~~
+:GcovLoad source.gcov
+~~~
+
+or
+
+~~~
+:GcovLoadDir directory_of_gcda_gcno
+~~~
+
+2. To hide the coverage marking, run command
+
+~~~
+:GcovLoad!
+~~~
+
+or
+
+~~~
+:GcovLoadDir!
+~~~
+
+3. To reload the last coverage file or dir
+
+~~~
+:GcovLoad
+~~~
+
+or
+
+~~~
+:GcovLoadDir
+~~~
