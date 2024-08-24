@@ -16,8 +16,41 @@ you do not get detailed information like the number of hits or branches.
 
 ## Usage
 
-In the window of your source file, run command
+1. In the window of your source file, run command
+
+```
 :GcovLoad source.gcov
+```
+
+or
+
+```
+:GcovLoadDir directory_of_gcda_gcno
+```
+
+2. To hide the coverage marking, run command
+
+```
+:GcovLoad!
+```
+
+or
+
+```
+:GcovLoadDir!
+```
+
+3. To reload the last coverage file or dir
+
+```
+:GcovLoad
+```
+
+or
+
+```
+:GcovLoadDir
+```
 
 If *g:gcov_marker_path* contains a folder with all your .gcov files, run
 :GcovFind
