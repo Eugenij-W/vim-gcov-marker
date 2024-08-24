@@ -31,7 +31,7 @@ function gcov_marker#FindCov(...)
     " check current file name matches Source
     for file in files
         for line in readfile(file)
-            if line =~ ':.*:.*:'
+            if line =~ '\V:.*:.*:'
                 let d = split(line, ':')
                 let c = substitute(d[0], " *", "", "")
                 let l = substitute(d[1], " *", "", "")
@@ -74,6 +74,7 @@ function gcov_marker#SetCov(...)
             let d = split(line, ':')
             let c = substitute(d[0], " *", "", "")
             let l = substitute(d[1], " *", "", "")
+            echom "l:" . l
             if '-' != c && c !~ '#' && c !~ '='
                 exe ":sign place " . l . " line=" . l . " name=gcov_covered file=" . expand("%:p")
             elseif c =~ '#' || c =~ '='
